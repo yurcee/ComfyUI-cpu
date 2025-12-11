@@ -66,7 +66,9 @@ Recommended SD1.5 LCM setup (fastest on CPU):
   [https://huggingface.co/latent-consistency/lcm-lora-sdv1-5](https://huggingface.co/latent-consistency/lcm-lora-sdv1-5)
   Save to: `models/loras/`
 
-* **Workflow SD1.5-LCM.json**
+* **Workflow SD1.5-LCM.json** (Downloaded with the repo.)
+  Direct link for perusal:
+  [https://github.com/yurcee/ComfyUI-cpu/blob/master/Workflow-SD15-LCM.json](https://github.com/yurcee/ComfyUI-cpu/blob/master/Workflow-SD15-LCM.json)
   Load inside ComfyUI via:
   **Menu → Load → Load Workflow**
 
