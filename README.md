@@ -1,129 +1,161 @@
-<div align="left">
+# ComfyUI-CPU
 
-# ComfyUI-cpu
-**ComfyUI-cpu is a trimmed down version of ComfyUI that only uses the cpu. I hope someone finds this useful. I needed to run comfyui on cpu only device so I created this fork of ComfyUI optimized for cpu usage. The most powerful and modular diffusion model GUI and backend.**
+A lightweight, CPU-only fork of ComfyUI. Optimized for devices without a GPU: older laptops, servers, virtual machines, and low-power systems.
 
-## Use Cases:
-Any Computer with a cpu and ram.
+Includes a compatible, frozen-state version of **ComfyUI Manager** and supports SD1.5 LCM for fast 3-step generation.
 
--- cpu only web server
+---
 
--- laptop with no gpu
+## Features
 
--- older PCs
+* CPU-only execution (no CUDA, no GPU dependencies)
+* Works on Linux, macOS, and Windows via Git Bash
+* Includes an older, stable ComfyUI-Manager version optimized for this fork
+* Simple installation script (`install_comfyui-cpu.sh`)
+* Supports SD1.5 LCM models for fast inference on CPU hardware
 
--- weak onboard gpus
-## Docker install 
+---
 
-```docker pull ardenius/comfyui-cpu```
+## Quick Install (Linux + macOS)
 
-## Fast installation 
+Clone the repo:
 
-(Linux and MacOS for windows see below instructions)
+```bash
+git clone https://github.com/yurcee/ComfyUI-cpu.git
+cd ComfyUI-cpu
+```
 
-### includes comfyui manager
+Run the installer:
 
-```git clone https://github.com/ArdeniusAI/ComfyUI-cpu.git```
+```bash
+./install_comfyui-cpu.sh
+```
 
-```cd ComfyUI-cpu```
+Start ComfyUI:
 
-```./install_comfyui-cpu.sh```
+```bash
+./start_comfyui-cpu.sh
+```
 
-### once installed then run the following to start:
-```./start_comfyui-cpu.sh```
+ComfyUI will launch a browser window at:
 
-## Manual installation 
+```
+http://localhost:8188
+```
 
-### 1. Git clone this repo
-```git clone https://github.com/ArdeniusAI/ComfyUI-cpu.git```
+---
 
-### 2. cd into ComfyUI folder 
-```cd ComfyUI```
+## Manual Installation
 
-### 3. download and copy your models and vae into 
+### 1. Clone the repository
 
-Recommended for SD1.5 LCM for 3-step generation and good images download the below workflow and models you can replace the sgm-uniform with lcm scheduler for faster generations. 
-You can download the needed models and workflow from here or in any other place. I just added them for easier download here.
-[Download SD1.5 LCM models, lora, and workflow for ComfyUI-cpu](https://ko-fi.com/s/c66251b736)
+```bash
+git clone https://github.com/yurcee/ComfyUI-cpu.git
+cd ComfyUI-cpu
+```
 
-### 4. create a virtual environment
-```python3 -m venv venv```
+### 2. Add your models
 
-### 5. install torch 
-```pip3 install torch==2.4.1+cpu torchvision==0.19.1+cpu torchaudio==2.4.1+cpu --index-url https://download.pytorch.org/whl/cpu```
+Recommended SD1.5 LCM setup (fastest on CPU):
 
-And install it again with the command above.
+* **LCM SD1.5 Model (2.1 GB)**
+  [https://huggingface.co/latent-consistency/lcm-sdv1-5](https://huggingface.co/latent-consistency/lcm-sdv1-5)
+  Save to: `models/checkpoints/`
 
-### 6. install Dependencies
+* **LCM LoRA (135 MB)**
+  [https://huggingface.co/latent-consistency/lcm-lora-sdv1-5](https://huggingface.co/latent-consistency/lcm-lora-sdv1-5)
+  Save to: `models/loras/`
 
-Install the dependencies by opening your terminal inside the ComfyUI folder and:
+* **Workflow SD1.5-LCM.json**
+  Load inside ComfyUI via:
+  **Menu → Load → Load Workflow**
 
-```pip3 install -r requirements.txt```
+Optional bundle containing all of the above:
+[https://ko-fi.com/s/c66251b736](https://ko-fi.com/s/c66251b736)
 
-After this you should have everything installed and can proceed to running ComfyUI.
+> Tip: For faster CPU generation, you may swap `sgm-uniform` for the `lcm` scheduler in your workflow.
 
-### 7. in ComfyUI folder then Run
-```python3 main.py --cpu --cpu-vae --auto-launch```
+### 3. Create a virtual environment
 
-### 8. open it in your browser
-```http://localhost:8188```
+```bash
+python3 -m venv venv
+```
 
-## Windows installation:
+### 4. Install PyTorch (CPU-Only)
 
-### require installing Git Bash on Windows then run the above instructions:
+```bash
+pip install torch==2.4.1+cpu torchvision==0.19.1+cpu torchaudio==2.4.1+cpu \
+  --index-url https://download.pytorch.org/whl/cpu
+```
 
-1. Download Git for Windows from the official website:
-https://gitforwindows.org/
+### 5. Install other dependencies
 
-2. Run the downloaded installation file
+```bash
+pip install -r requirements.txt
+```
 
-3. Follow the installation wizard instructions
+### 6. Run ComfyUI
 
-4. During the installation process, you can choose the components you want to install. Make sure to select "Git Bash Here" option if you want the context menu integratios.
+```bash
+python3 main.py --cpu --cpu-vae --auto-launch
+```
 
-5. Complete the installation by following the on-screen instructions
+---
 
-6. After the installation is complete, you can launch Git Bash by searching for it in the Windows search bar.
+## Windows Installation (Git Bash)
 
-Once Git Bash is installed, you can use it to run Git commands and execute shell scripts on your Windows system.
-</div>
+Windows requires Git Bash to run the installer.
 
-## Shortcuts
+1. Install Git for Windows:
+   [https://gitforwindows.org/](https://gitforwindows.org/)
 
-| Keybind                            | Explanation                                                                                                        |
-|------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| Ctrl + Enter                       | Queue up current graph for generation                                                                              |
-| Ctrl + Shift + Enter               | Queue up current graph as first for generation                                                                     |
-| Ctrl + Alt + Enter                 | Cancel current generation                                                                                          |
-| Ctrl + Z/Ctrl + Y                  | Undo/Redo                                                                                                          |
-| Ctrl + S                           | Save workflow                                                                                                      |
-| Ctrl + O                           | Load workflow                                                                                                      |
-| Ctrl + A                           | Select all nodes                                                                                                   |
-| Alt + C                            | Collapse/uncollapse selected nodes                                                                                 |
-| Ctrl + M                           | Mute/unmute selected nodes                                                                                         |
-| Ctrl + B                           | Bypass selected nodes (acts like the node was removed from the graph and the wires reconnected through)            |
-| Delete/Backspace                   | Delete selected nodes                                                                                              |
-| Ctrl + Backspace                   | Delete the current graph                                                                                           |
-| Space                              | Move the canvas around when held and moving the cursor                                                             |
-| Ctrl/Shift + Click                 | Add clicked node to selection                                                                                      |
-| Ctrl + C/Ctrl + V                  | Copy and paste selected nodes (without maintaining connections to outputs of unselected nodes)                     |
-| Ctrl + C/Ctrl + Shift + V          | Copy and paste selected nodes (maintaining connections from outputs of unselected nodes to inputs of pasted nodes) |
-| Shift + Drag                       | Move multiple selected nodes at the same time                                                                      |
-| Ctrl + D                           | Load default graph                                                                                                 |
-| Alt + `+`                          | Canvas Zoom in                                                                                                     |
-| Alt + `-`                          | Canvas Zoom out                                                                                                    |
-| Ctrl + Shift + LMB + Vertical drag | Canvas Zoom in/out                                                                                                 |
-| P                                  | Pin/Unpin selected nodes                                                                                           |
-| Ctrl + G                           | Group selected nodes                                                                                               |
-| Q                                  | Toggle visibility of the queue                                                                                     |
-| H                                  | Toggle visibility of history                                                                                       |
-| R                                  | Refresh graph                                                                                                      |
-| Double-Click LMB                   | Open node quick search palette                                                                                     |
-| Shift + Drag                       | Move multiple wires at once                                                                                        |
-| Ctrl + Alt + LMB                   | Disconnect all wires from clicked slot                                                                             |
+2. Open *Git Bash*
 
-Ctrl can also be replaced with Cmd instead for macOS users
+3. Run the same commands as Linux/macOS:
 
+```bash
+git clone https://github.com/yurcee/ComfyUI-cpu.git
+cd ComfyUI-cpu
+./install_comfyui-cpu.sh
+./start_comfyui-cpu.sh
+```
 
+---
 
+## Workflow & Prompts
 
+To use the included SD1.5 LCM workflow:
+
+* Load the JSON workflow via **Menu → Load**
+* Edit:
+
+  * Positive prompt = what you want (e.g., "vintage car on a mountain road")
+  * Negative prompt = what to avoid (e.g., "blurry, distorted, watermark")
+* Press **Queue Prompt** to generate
+
+---
+
+## Keyboard Shortcuts
+
+| Keybind              | Description           |
+| -------------------- | --------------------- |
+| Ctrl + Enter         | Queue current graph   |
+| Ctrl + Shift + Enter | Queue as first        |
+| Ctrl + Alt + Enter   | Cancel generation     |
+| Ctrl + S             | Save workflow         |
+| Ctrl + O             | Load workflow         |
+| Ctrl + Z/Y           | Undo/Redo             |
+| Delete               | Remove selected nodes |
+| Ctrl + A             | Select all nodes      |
+| Double-Click         | Node search palette   |
+| Q                    | Toggle queue          |
+| H                    | Toggle history        |
+| R                    | Refresh graph         |
+
+---
+
+## Docker Image (Ardenius)
+
+```bash
+docker pull ardenius/comfyui-cpu
+```
